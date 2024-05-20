@@ -11,16 +11,18 @@ new WebHostBuilder()
                     o.EnableDetailedErrors = true;
                 });
         services.AddRazorPages();
-        services.AddSession();
     })
     .Configure(app =>
     {
+        app.Use(async (context, next) =>
+        {
+            await Task.Delay(500);  //This causes the issue
+            await next();
+        });
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        app.UseSession();
         app.UseRouting();
-        app.UseAuthentication();
-        app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {

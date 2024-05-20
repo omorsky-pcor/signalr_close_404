@@ -1,3 +1,10 @@
-SignalR close call randomy returning 404
+SignalR close call returning 404
 
-See video - https://github.com/omorsky-pcor/signalr_close_404/blob/main/404_empty_random.mp4
+Caused by a delay in 
+```csharp
+    app.Use(async (context, next) =>
+        {
+            await Task.Delay(500);
+            await next();
+        });
+```
